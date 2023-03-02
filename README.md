@@ -1,51 +1,45 @@
 # shell-script
 #1. validate_file.sh
 
-#get parameter/path config.sh
-source /config.sh
+    #get parameter/path config.sh
+    source /config.sh
 
-cd $FILE_PATH
+    cd $FILE_PATH
+    year_valid=`date +%Y`
+    mon_valid=`date +%m`
+    day_valid=`date +%d`
+    TODAY_VALID=${year_valid}-${mon_valid}-${day_valid}
+    pipeCount=
+    lengthCount=
 
-year_valid=`date +%Y`
+    #loop find .CSV
+    for file in *.CSV; do
 
-mon_valid=`date +%m`
+    file_no_ext=${file%.*}
 
-day_valid=`date +%d`
+    #change file name / แก้ไขชื่อไฟล์
+    mv $file "$file_no_ext"_ORG.CSV
 
-TODAY_VALID=${year_valid}-${mon_valid}-${day_valid}
+    #condition check file name / เช็คเงื่อนไขจากชื่อที่ได้จาก loop
+    if [ "$file_no_ext" == "test1" ]; then
+        pipeCount=12
+        lengthCount=100
+    elif [ "$file_no_ext" == "test2" ]; then
+        pipeCount=12
+        lengthCount=200
+    elif [ "$file_no_ext" == "test3" ]; then
+        pipeCount=3
+        lengthCount=300
+    elif [ "$file_no_ext" == "test4" ]; then
+        pipeCount=57
+        lengthCount=400
+    elif [ "$file_no_ext" == "test5" ]; then
+        pipeCount=2
+        lengthCount=500
+    fi
 
-pipeCount=
-
-lengthCount=
-
-#loop find .CSV
-for file in *.CSV; do
-
-file_no_ext=${file%.*}
-
-#change file name / แก้ไขชื่อไฟล์
-mv $file "$file_no_ext"_ORG.CSV
-
-#condition check file name / เช็คเงื่อนไขจากชื่อที่ได้จาก loop
-if [ "$file_no_ext" == "test1" ]; then
-    pipeCount=12
-    lengthCount=100
-elif [ "$file_no_ext" == "test2" ]; then
-    pipeCount=12
-    lengthCount=200
-elif [ "$file_no_ext" == "test3" ]; then
-    pipeCount=3
-    lengthCount=300
-elif [ "$file_no_ext" == "test4" ]; then
-    pipeCount=57
-    lengthCount=400
-elif [ "$file_no_ext" == "test5" ]; then
-    pipeCount=2
-    lengthCount=500
-fi
-
-#check empty / เช็คว่าต้องมีข้อมูล 
-if [ ! -z "$pipeCount" ] && [ ! -z "$lengthCount" ]; then
+    #check empty / เช็คว่าต้องมีข้อมูล 
+    if [ ! -z "$pipeCount" ] && [ ! -z "$lengthCount" ]; then
    
         #check total record / เช็คจำนวนแถวทั้งหมด
         totalORGCount=$(awk 'END{print NR}' "$file_no_ext"_ORG.CSV)
