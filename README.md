@@ -3,16 +3,24 @@
 
 #get parameter/path config.sh
 source /config.sh
+
 cd $FILE_PATH
+
 year_valid=`date +%Y`
+
 mon_valid=`date +%m`
+
 day_valid=`date +%d`
+
 TODAY_VALID=${year_valid}-${mon_valid}-${day_valid}
+
 pipeCount=
+
 lengthCount=
 
 #loop find .CSV
 for file in *.CSV; do
+
 file_no_ext=${file%.*}
 
 #change file name / แก้ไขชื่อไฟล์
